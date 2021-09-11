@@ -8,8 +8,36 @@
 </div>
 <div class="row">
     <div class="card mx-auto">
+        <div>
+            @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+            @endif
+        </div>
         <div class="card-header">
-            <a class="float-right" href="{{ route('users.create')}}">Create</a>
+        <div class="row">
+                <div class="col">
+                    <form method="GET" action="{{ route('users.index') }}">
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <label class="sr-only" for="inlineFormInput">Name</label>
+                                <input type="search" name="search" class="form-control mb-2" id="inlineFormInput"
+                                    placeholder="Jane Doe">
+                            </div>
+                            <div class="col-auto">
+                                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                            </div>
+                             <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <a class="btn btn-primary mb-2" href="{{ route('users.create')}}">Create</a>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <table class="table">
@@ -27,7 +55,9 @@
                         <th scope="row">{{ $user->id }}</th>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>Edit/delete</td>
+                        <td>
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success">Edit</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
